@@ -6,20 +6,28 @@ import { NavLink } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useParams } from 'react-router-dom';
 
-const Home = () => {
+const EditUser = () => {
 
     const history = useNavigate();
     const [data, setData] = useState(() => {
         return JSON.parse(localStorage.getItem('userDB')) || []
     });
+
+    let params  = useParams();
+
+    const obj  = data.filter((x)=>{
+        return x.id === parseInt(params.id)
+    })[0]
+
     // const [data, setData] = useState([])
     const [inpval, setInpval] = useState({
-        id:Math.floor(1000+Math.random()*9000),
-        name: "",
-        email: "",
-        password: "",
-        userLevel: ""
+        id:obj.id,
+        name:obj.name,
+        email: obj.email,
+        password:obj.password,
+        userLevel: obj.userLevel
     })
 
     const getdata = (e) => {
@@ -57,9 +65,16 @@ const Home = () => {
                 position: "top-center",
             });
         } else {
-            setData((prevArray) => [...prevArray, inpval])
+            setData([
+                ...data.map((x)=>{
+                    if(x.id === parseInt(params.id)){
+                        return{...x,...inpval}
+                    }
+                    return x
+                })
+            ])
             setTimeout(() => {
-                history("/login")
+                history("/details")
             }, 1000)
         }
 
@@ -74,19 +89,19 @@ const Home = () => {
             <div className="container mt-3">
                 <section className='d-flex justify-content-between'>
                     <div className="left_data mt-3 p-3" style={{ width: "100%" }}>
-                        <h3 className='text-center col-lg-6'>Sign Up</h3>
+                        <h3 className='text-center col-lg-6'>Edit User</h3>
                         <Form >
                             <Form.Group className="mb-3 col-lg-6" controlId="formBasicEmail">
 
-                                <Form.Control type="text" name='name' onChange={getdata} placeholder="Enter Your Name" />
+                                <Form.Control type="text" value={inpval.name} name='name' onChange={getdata} placeholder="Enter Your Name" />
                             </Form.Group>
                             <Form.Group className="mb-3 col-lg-6" controlId="formBasicEmail">
 
-                                <Form.Control type="email" name='email' onChange={getdata} placeholder="Enter email" />
+                                <Form.Control type="email" value={inpval.email} name='email' onChange={getdata} placeholder="Enter email" />
                             </Form.Group>
 
                             <Form.Group className="mb-3 col-lg-6" controlId="userLevel">
-                            <Form.Select  aria-label="Default select example" name="userLevel" onChange={getdata}>
+                            <Form.Select  aria-label="Default select example" value={inpval.userLevel} name="userLevel" onChange={getdata}>
                                 <option>User Level</option>
                                 <option value="1">User</option>
                                 <option value="2">Admin</option>
@@ -96,16 +111,14 @@ const Home = () => {
 
                             <Form.Group className="mb-3 col-lg-6" controlId="formBasicPassword">
 
-                                <Form.Control type="password" name='password' onChange={getdata} placeholder="Password" />
+                                <Form.Control type="password" name='password' value={inpval.password} onChange={getdata} placeholder="Password" />
                             </Form.Group>
 
                             <Button variant="primary" className='col-lg-6' onClick={addData} style={{ background: "rgb(67, 185, 127)" }} type="submit">
                                 Submit
                             </Button>
                         </Form>
-                        <p className='mt-3'>Already Have an Account <span><NavLink to="/login">SignIn</NavLink></span> </p>
                     </div>
-                    <SIgn_img />
                 </section>
                 <ToastContainer />
             </div>
@@ -113,4 +126,4 @@ const Home = () => {
     )
 }
 
-export default Home
+export default EditUser

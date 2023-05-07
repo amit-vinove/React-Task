@@ -5,6 +5,9 @@ import Home from './components/Home';
 import Login from './components/Login';
 import Details from './components/Details';
 import Errror from './components/Errror';
+import AddUser from './components/addUser'
+import EditUser from './components/editUser';
+import ForgotPassword from './components/forgotPassword';
 import {Routes,Route} from "react-router-dom"
 
 function App() {
@@ -15,6 +18,9 @@ function App() {
       <Route path='/' element={<Home />} />
       <Route path='/login' element={<Login />} />
       <Route path='/details' element={<Details />} />
+      <Route path='/addUser' element={<AddUser />} />
+      <Route path='/editUser/:id' element={<EditUser />} />
+      <Route path='/forgotPassword' element={<ForgotPassword />} />
       <Route path='*' element={<Errror />} />
     </Routes>
   </>

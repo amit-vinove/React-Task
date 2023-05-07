@@ -5,6 +5,8 @@ import SIgn_img from './SIgn_img'
 import { useNavigate } from 'react-router-dom'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { NavLink } from 'react-router-dom'
+
 
 const Login = () => {
 
@@ -16,7 +18,6 @@ const Login = () => {
     })
 
     const [data, setData] = useState([]);
-    console.log(inpval);
 
     const getdata = (e) => {
         // console.log(e.target.value);
@@ -38,8 +39,7 @@ const Login = () => {
     const addData = (e) => {
         e.preventDefault();
 
-        const getuserArr = localStorage.getItem("useryoutube");
-        console.log(getuserArr);
+        const getuserArr = localStorage.getItem("userDB");
 
         const { email, password } = inpval;
         if (email === "") {
@@ -69,7 +69,6 @@ const Login = () => {
                 if (userlogin.length === 0) {
                     alert("invalid details")
                 } else {
-                    console.log("user login succesfulyy");
 
                     localStorage.setItem("user_login", JSON.stringify(userlogin))
 
@@ -101,7 +100,8 @@ const Login = () => {
                                 Submit
                             </Button>
                         </Form>
-                        <p className='mt-3'>Already Have an Account <span>SignIn</span> </p>
+                        <p className='mt-3'>Don't Have an Account ?<span><NavLink to="/"> SignUp</NavLink></span> </p>
+                        <span><NavLink to="/forgotPassword"> Forgot Password</NavLink></span>
                     </div>
                     <SIgn_img />
                 </section>

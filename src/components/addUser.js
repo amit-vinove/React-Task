@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-const Home = () => {
+const AddUser = () => {
 
     const history = useNavigate();
     const [data, setData] = useState(() => {
@@ -59,7 +59,7 @@ const Home = () => {
         } else {
             setData((prevArray) => [...prevArray, inpval])
             setTimeout(() => {
-                history("/login")
+                history("/details")
             }, 1000)
         }
 
@@ -74,7 +74,7 @@ const Home = () => {
             <div className="container mt-3">
                 <section className='d-flex justify-content-between'>
                     <div className="left_data mt-3 p-3" style={{ width: "100%" }}>
-                        <h3 className='text-center col-lg-6'>Sign Up</h3>
+                        <h3 className='text-center col-lg-6'>Add User</h3>
                         <Form >
                             <Form.Group className="mb-3 col-lg-6" controlId="formBasicEmail">
 
@@ -103,9 +103,7 @@ const Home = () => {
                                 Submit
                             </Button>
                         </Form>
-                        <p className='mt-3'>Already Have an Account <span><NavLink to="/login">SignIn</NavLink></span> </p>
                     </div>
-                    <SIgn_img />
                 </section>
                 <ToastContainer />
             </div>
@@ -113,4 +111,4 @@ const Home = () => {
     )
 }
 
-export default Home
+export default AddUser
